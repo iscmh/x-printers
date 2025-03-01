@@ -125,4 +125,8 @@ app.post('/api/auth/logout', (req: express.Request, res: express.Response) => {
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+app.get('/', (req: express.Request, res: express.Response) => {
+  res.send('Welcome to the X Printers API!');
 }); 
