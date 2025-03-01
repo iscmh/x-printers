@@ -1,0 +1,37 @@
+{
+  "name": "x-printers-backend",
+  "version": "1.0.0",
+  "description": "Backend for X Printers application",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "postinstall": "npm run build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "passport": "^0.6.0",
+    "passport-twitter": "^1.0.4",
+    "pg": "^8.11.0",
+    "typeorm": "^0.3.17",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/express-session": "^1.17.7",
+    "@types/node": "^18.16.3",
+    "@types/passport": "^1.0.12",
+    "@types/passport-twitter": "^1.0.37",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
