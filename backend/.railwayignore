@@ -1,0 +1,5 @@
+# Ignore everything in the root except the backend directory
+../frontend/
+../roadmap.md
+../.gitignore
+../README.md 
