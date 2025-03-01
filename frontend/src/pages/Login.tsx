@@ -1,6 +1,29 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    // Check if user is already authenticated
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/status`, {
+        credentials: 'include'
+      });
+      const data = await response.json();
+      
+      if (data.isAuthenticated) {
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+    }
+  };
+
   const handleTwitterLogin = () => {
     // This will be connected to your backend Twitter auth endpoint
     window.location.href = `${process.env.REACT_APP_API_URL}/auth/twitter`;
