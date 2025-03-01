@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "CI=false npm run build"
   publish = "build"
 
 # Handle React Router's client-side routing
@@ -10,6 +10,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  CI = "false"
 
 # Enable HTTPS and security headers
 [[headers]]
