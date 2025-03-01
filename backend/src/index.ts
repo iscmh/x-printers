@@ -8,6 +8,11 @@ import { Strategy as TwitterStrategy } from 'passport-twitter';
 // Load environment variables
 dotenv.config();
 
+// Check required environment variables
+if (!process.env.TWITTER_CLIENT_ID || !process.env.TWITTER_CLIENT_SECRET || !process.env.TWITTER_CALLBACK_URL) {
+  throw new Error('Missing required environment variables for Twitter authentication');
+}
+
 // Initialize express
 const app = express();
 
@@ -31,7 +36,7 @@ app.use(express.json());
 
 // Session configuration
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  secret: process.env.SESSION_SECRET || 'default_secret_key',
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -55,20 +60,19 @@ passport.deserializeUser((user: any, done: any) => {
   done(null, user);
 });
 
+// Twitter Strategy with type checking
+const twitterConfig = {
+  consumerKey: process.env.TWITTER_CLIENT_ID,
+  consumerSecret: process.env.TWITTER_CLIENT_SECRET,
+  callbackURL: process.env.TWITTER_CALLBACK_URL,
+  includeEmail: true
+} as const;
+
 // Twitter Strategy
-passport.use(new TwitterStrategy({
-    consumerKey: process.env.TWITTER_CLIENT_ID!,
-    consumerSecret: process.env.TWITTER_CLIENT_SECRET!,
-    callbackURL: process.env.TWITTER_CALLBACK_URL,
-    includeEmail: true
-  },
+passport.use(new TwitterStrategy(
+  twitterConfig,
   async (token: string, tokenSecret: string, profile: any, done: any) => {
     try {
-      // Here you would typically:
-      // 1. Check if user exists in your database
-      // 2. Create new user if they don't exist
-      // 3. Update user's access token
-      
       const user = {
         id: profile.id,
         name: profile.displayName,
